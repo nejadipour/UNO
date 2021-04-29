@@ -1,7 +1,6 @@
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-public class DisplayMap
+public class DisplayMap extends Display
 {
     private String format1; // for 3 or 4 players
     private String format2; // for 5 players
@@ -60,9 +59,9 @@ public class DisplayMap
 
     public void updateMap(ArrayList<Player> players, Player roundPlayer, Card roundCard)
     {
-        String grayANSICode = "\u001B[37m";
-        String yellowANSICode = "\u001B[33m";
-        String resetANSICode = "\u001B[0m";
+        String grayANSICode = getColorANSICode("gray");
+        String yellowANSICode = getColorANSICode("yellow");
+        String resetANSICode = getColorANSICode("reset");
 
         this.map = grayANSICode + map + resetANSICode;
 
@@ -171,23 +170,6 @@ public class DisplayMap
         }
 
         return playerPoint;
-    }
-
-
-    public String getColorANSICode(String color)
-    {
-        String ANSICode = "";
-        switch (color)
-        {
-            case "red" -> ANSICode = "\u001B[31m";
-            case "blue" -> ANSICode = "\u001B[34m";
-            case "black" -> ANSICode = "";
-            case "green" -> ANSICode = "\u001B[32m";
-
-        }
-
-        return ANSICode;
-
     }
 
 

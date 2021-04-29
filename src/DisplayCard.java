@@ -73,11 +73,6 @@ public class DisplayCard extends Display
     }
 
 
-
-
-
-
-
     public void printCards(ArrayList<Card> cards, Player player)
     {
         updateColors(cards, player);
@@ -94,19 +89,47 @@ public class DisplayCard extends Display
 
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
+
+
+/*
+
+ ____________
+|A           |
+|            |
+|            |
+|            |
+|            |
+|            |
+|           A|
+|____________|
+
+
+ ______ ______ _____________
+|A     |4     |B            |
+|      |      |             |
+|      |      |             |
+|      |      |             |
+|      |      |             |
+|      |      |             |
+|      |      |           B |
+|______|______|_____________|
+
+
+head:
+" ______" ______" _____________"
+
+name:
+"|#     "|#     "|#            |"
+
+body(5 lines)
+"|      "|      "|             |"
+
+lastName:
+"|      "|      "|           # |"
+
+bottom:
+"|______"|______"|_____________|"
+
+
+ */

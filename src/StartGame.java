@@ -1,10 +1,20 @@
 import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
+
+/**
+ * subclass of game
+ * first information and data will be generated here before the game starts
+ * @author Alireza Nejadipour
+ * @version 4.4
+ */
 
 
 public class StartGame extends Game
 {
-    private String welcomeMessage;
+    private final String welcomeMessage;
+
+    /**
+     * create a new start
+     */
     public StartGame()
     {
         super();
@@ -21,6 +31,9 @@ public class StartGame extends Game
     }
 
 
+    /**
+     * prints the start message
+     */
     public void startMessage()
     {
         System.out.println(welcomeMessage);
@@ -28,6 +41,11 @@ public class StartGame extends Game
     }
 
 
+    /**
+     * gets information to start the game
+     * like the number of players
+     * and the names
+     */
     protected void getStartInfo()
     {
         System.out.print("How many players(all) ? : ");
@@ -42,35 +60,42 @@ public class StartGame extends Game
         System.out.print("How many of the players are human? : ");
         int humanNUm = scanner.nextInt();
 
-        if (humanNUm > num)
+        if (humanNUm > num || humanNUm == 0)
         {
             invalidInput();
             getStartInfo();
 
         }
 
-
-        for (int playerNum = 1 ; playerNum <= humanNUm ; playerNum++)
+        else
         {
-            System.out.print("Enter the name of player " + playerNum + " : ");
-            String name = scanner.next();
-            Human human = new Human(name);
-            players.add(human);
+            for (int playerNum = 1 ; playerNum <= humanNUm ; playerNum++)
+            {
+                System.out.print("Enter the name of player " + playerNum + " : ");
+                String name = scanner.next();
+                Human human = new Human(name);
+                players.add(human);
+
+            }
+
+            // generate names for bots
+            for (int playerNum = 1 ; playerNum <= num - humanNUm ; playerNum++)
+            {
+                String name = "Bot" + playerNum;
+                Bot bot = new Bot(name);
+                players.add(bot);
+
+            }
 
         }
-
-        for (int playerNum = 1 ; playerNum <= num - humanNUm ; playerNum++)
-        {
-            String name = "Bot" + playerNum;
-            Bot bot = new Bot(name);
-            players.add(bot);
-
-        }
-
 
     }
 
 
+    /**
+     * makes 52 cards
+     * 13 from each color
+     */
     public void generateCards()
     {
         for (String color : colors)
@@ -84,6 +109,11 @@ public class StartGame extends Game
     }
 
 
+    /**
+     * makes 13 cards for passed color
+     * @param color the color of the card
+     * @return the list of 13 cards
+     */
     public ArrayList<Card> generateColorCards(String color)
     {
         ArrayList<Card> colorCards = new ArrayList<>();
@@ -130,17 +160,19 @@ public class StartGame extends Game
     }
 
 
+    /**
+     * each player will have 7 cards by random at the start point
+     */
     public void spreadCards()
     {
         // how many cards should be spread at all
         int count = players.size() * 7;
 
-
         while (count > 0)
         {
             for (Player player : players)
             {
-                Card card = randomCard();
+                Card card = randomCard(allCards);
                 player.addCard(card);
                 allCards.remove(card);
 
@@ -155,6 +187,10 @@ public class StartGame extends Game
     }
 
 
+    /**
+     * one player should start the game by random
+     * @return the roundPlayer
+     */
     public Player whoStarts()
     {
         int index = random.nextInt(players.size());
@@ -165,8 +201,5 @@ public class StartGame extends Game
         return players.get(index);
 
     }
-
-
-
 
 }

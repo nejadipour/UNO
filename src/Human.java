@@ -1,7 +1,16 @@
-import java.util.DoubleSummaryStatistics;
+/**
+ * subclass of Player
+ * methods related to human are stored here
+ * @author Alireza Nehadipour
+ * @version 3.2
+ */
 
 public class Human extends Player
 {
+    /**
+     * create a new human
+     * @param name name of the human
+     */
     public Human(String name)
     {
         super(name);
@@ -9,6 +18,10 @@ public class Human extends Player
     }
 
 
+    /**
+     * player decides a card from valid ones
+     * @param runGame access to running system
+     */
     @Override
     public void chooseCard(RunGame runGame)
     {
@@ -19,6 +32,12 @@ public class Human extends Player
     }
 
 
+    /**
+     * used after deciding a card
+     * if it is valid or not related messages will be displayed
+     * @param chosenCard card that is decided
+     * @param runGame access to running system
+     */
     public void invalidHandler(Card chosenCard, RunGame runGame)
     {
         if (!validCard(chosenCard))
@@ -29,7 +48,6 @@ public class Human extends Player
         }
         else
         {
-
             askToContinue(chosenCard, runGame);
 
         }
@@ -37,6 +55,12 @@ public class Human extends Player
     }
 
 
+    /**
+     * asks to continue or not
+     * if player wants to change the decision before run the next round
+     * @param chosen the decided card
+     * @param runGame access to running system
+     */
     public void askToContinue(Card chosen, RunGame runGame)
     {
         System.out.println(chosen);
@@ -53,13 +77,11 @@ public class Human extends Player
             runGame.roundPlayer.removeCard(chosen);
             runGame.setRoundCard(chosen);
 
-
         }
 
         else if (choice == 2)
         {
             chooseCard(runGame);
-//            setCardToPutMiddle(null);
 
         }
 

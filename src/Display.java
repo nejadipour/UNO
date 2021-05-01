@@ -1,5 +1,16 @@
+/**
+ * super class used for displaying cards
+ * @author Alireza Nejadipour
+ * @version 1
+ */
+
 public class Display
 {
+    /**
+     * gets color ANSI code
+     * @param color the color that we need its ANSI code
+     * @return the related ANSI code
+     */
     public String getColorANSICode(String color)
     {
         String ANSICode = "";
@@ -19,6 +30,12 @@ public class Display
     }
 
 
+    /**
+     * cards count (or index) are in format of '# " or '##'
+     * method converts number to valid format
+     * @param count the count that should convert to valid format
+     * @return the string generated
+     */
     public String formatCardCount(int count)
     {
         String cardCount = Integer.toString(count);
@@ -29,6 +46,5 @@ public class Display
         return cardCount;
 
     }
-
 
 }

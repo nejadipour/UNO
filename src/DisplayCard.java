@@ -1,10 +1,20 @@
 import java.util.ArrayList;
 
+/**
+ * subclass of Display
+ * used each round for human to decide from cards
+ * @author Alireza Nejadipour
+ * @version 1.8
+ */
+
 public class DisplayCard extends Display
 {
     private StringBuilder playerCards;
     private ArrayList<String> ANSICodes;
 
+    /**
+     * create a new displayCard
+     */
     public DisplayCard()
     {
         super();
@@ -14,6 +24,12 @@ public class DisplayCard extends Display
     }
 
 
+    /**
+     * updates colors based on the color field
+     * if it is not valid it will be gray
+     * @param cards the cards player has
+     * @param player the owner of the cards
+     */
     public void updateColors(ArrayList<Card> cards, Player player)
     {
         for (Card card : cards)
@@ -30,10 +46,14 @@ public class DisplayCard extends Display
 
         }
 
-
     }
 
 
+    /**
+     * updates body of the cards
+     * @param smallFormat cards that will display before last one
+     * @param largeFormat the last card format
+     */
     public void updateBody(String smallFormat, String largeFormat)
     {
         int lastIndex = ANSICodes.size() - 1;
@@ -51,6 +71,12 @@ public class DisplayCard extends Display
     }
 
 
+    /**
+     * updates cards names based on the player's cards
+     * @param cards all cards player has
+     * @param smallFormat cards that will display before last one
+     * @param largeFormat the last card format
+     */
     public void updateName(ArrayList<Card> cards, String smallFormat, String largeFormat)
     {
         int lastIndex = ANSICodes.size() - 1;
@@ -73,6 +99,12 @@ public class DisplayCard extends Display
     }
 
 
+    /**
+     * numbers will be added to bottom of the card
+     * @param cards all cards player has
+     * @param smallFormat for cards that will display before last one
+     * @param largeFormat for the last card format
+     */
     public void updateIndex(ArrayList<Card> cards, String smallFormat, String largeFormat)
     {
         this.playerCards.append("\n");
@@ -89,6 +121,11 @@ public class DisplayCard extends Display
     }
 
 
+    /**
+     * updates cards view and prints it
+     * @param cards all cards player has
+     * @param player the owner of the cards
+     */
     public void printCards(ArrayList<Card> cards, Player player)
     {
         this.playerCards = new StringBuilder();
@@ -105,8 +142,6 @@ public class DisplayCard extends Display
         updateIndex(cards, "   #   ", "      #      ");
 
         System.out.println(playerCards);
-
-
 
     }
 

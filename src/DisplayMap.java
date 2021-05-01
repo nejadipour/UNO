@@ -1,13 +1,24 @@
 import java.util.ArrayList;
 import java.util.Collections;
 
+/**
+ * subclass of Display
+ * used each round to print the map
+ * it shows the status of all players, roundPlayer, roundCard and the direction
+ * @author Alireza Nejadipour
+ * @version 3.8
+ */
+
 public class DisplayMap extends Display
 {
-    private String format1; // for 3 players
-    private String format2; // for 4 players
-    private String format3; // for 5 players
+    private final String format1; // for 3 players
+    private final String format2; // for 4 players
+    private final String format3; // for 5 players
     private String map;
 
+    /**
+     * different formats of map based on number of players
+     */
     public DisplayMap()
     {
         this.format1 = """
@@ -70,6 +81,10 @@ public class DisplayMap extends Display
     }
 
 
+    /**
+     * decides which format to be used
+     * @param size the number od players
+     */
     public void initMap(int size)
     {
         switch (size)
@@ -83,6 +98,12 @@ public class DisplayMap extends Display
     }
 
 
+    /**
+     * updates the map based on parameters passed
+     * @param players all players of the game
+     * @param roundPlayer the roundPlayer whose turn is it
+     * @param roundCard the card that is in the middle
+     */
     public void updateMap(ArrayList<Player> players, Player roundPlayer, Card roundCard)
     {
         String grayANSICode = getColorANSICode("gray");
@@ -93,6 +114,7 @@ public class DisplayMap extends Display
 
         String cardColor = roundCard.getColor();
 
+        // update the roundCard
         this.map = this.map.replace(" ____________", getColorANSICode(cardColor) + " ____________" + grayANSICode);
         this.map = this.map.replace("|#           |", getColorANSICode(cardColor) + "|#           |" + grayANSICode);
         this.map = this.map.replace("|            |", getColorANSICode(cardColor) + "|            |" + grayANSICode);
@@ -101,7 +123,7 @@ public class DisplayMap extends Display
 
         this.map = this.map.replace("# ", roundCard.getName());
 
-
+        // we use ASCII codes and update each player's info
         int nameAscii = 'A';
         int cardAscii = 'a';
         int pointAscii = '1';
@@ -136,16 +158,20 @@ public class DisplayMap extends Display
 
         }
 
-
     }
 
 
+    /**
+     * names are in length of 7
+     * if it is more we use '...' at the end
+     * @param name the name of player
+     * @return the converted name
+     */
     public String formatName(String name)
     {
         StringBuilder convertedName = new StringBuilder();
         if (name.length() > 7)
         {
-
             for (int i = 0 ; i < 4 ; i++)
             {
                 convertedName.append(name.toCharArray()[i]);
@@ -166,15 +192,16 @@ public class DisplayMap extends Display
         else
             return name;
 
-
         return convertedName.toString();
 
     }
 
 
-
-
-
+    /**
+     * points are in format of '###'
+     * @param point the point that should be converted
+     * @return valid format
+     */
     public String formatPoint(int point)
     {
         String playerPoint = Integer.toString(point);
@@ -191,6 +218,13 @@ public class DisplayMap extends Display
     }
 
 
+    /**
+     * prints the map based on parameters passed
+     * @param players all players
+     * @param roundPlayer the player whose turn is it
+     * @param roundCard card in the middle
+     * @param direction direction of the game
+     */
     public void printMap(ArrayList<Player> players, Player roundPlayer, Card roundCard, String direction)
     {
         System.out.println("____________________________________________________");

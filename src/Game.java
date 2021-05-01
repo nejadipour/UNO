@@ -2,6 +2,13 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
+/**
+ * super class that whole program details are stored in
+ * like allCards, players,...
+ * @author Alireza Nejadipour
+ * @version 5
+ */
+
 public class Game
 {
     protected ArrayList<Card> allCards;
@@ -11,7 +18,9 @@ public class Game
     protected ArrayList<String> colors;
     protected int choice;
 
-
+    /**
+     * create a new Game
+     */
     public Game()
     {
         this.allCards = new ArrayList<>();
@@ -28,13 +37,22 @@ public class Game
     }
 
 
+    /**
+     * generate a random number less than upperbound
+     * @param upperbound the max of random number
+     * @return generated number
+     */
     public int randomGenerator(int upperbound)
     {
         return random.nextInt(upperbound);
 
     }
 
-
+    /**
+     * used to get a card from list by random
+     * @param cards the list to get card from
+     * @return the random card
+     */
     public Card randomCard(ArrayList<Card> cards)
     {
         int index = randomGenerator(cards.size());
@@ -44,18 +62,9 @@ public class Game
     }
 
 
-    public Card randomCard()
-    {
-        int upperbound = allCards.size();
-        int index = random.nextInt(upperbound);
-
-        return allCards.get(index);
-
-    }
-
-
-
-
+    /**
+     * used in times player should press enter to continue
+     */
     public void pressEnter()
     {
         System.out.print("\nPress Enter...");
@@ -64,6 +73,9 @@ public class Game
     }
 
 
+    /**
+     * gets players inputs
+     */
     public void userChoice()
     {
         System.out.print("Your choice : ");
@@ -72,42 +84,53 @@ public class Game
     }
 
 
+    /**
+     * after invalid inputs it is used
+     */
     public void invalidInput()
     {
         System.out.println("Invalid input.");
 
     }
 
+    /**
+     * gets all the cards in the game
+     * @return allCards field
+     */
     public ArrayList<Card> getAllCards()
     {
         return allCards;
 
     }
 
+    /**
+     * gets all the players in the game
+     * @return players field
+     */
     public ArrayList<Player> getPlayers()
     {
         return players;
 
     }
 
-
+    /**
+     * gets all the colors in the game
+     * @return colors field
+     */
     public ArrayList<String> getColors()
     {
         return colors;
 
     }
 
-
+    /**
+     * set all cards
+     * @param allCards all cards to be set
+     */
     public void setAllCards(ArrayList<Card> allCards)
     {
         this.allCards = allCards;
 
     }
 
-
-    public void setPlayers(ArrayList<Player> players)
-    {
-        this.players = players;
-
-    }
 }

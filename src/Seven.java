@@ -1,7 +1,22 @@
 import java.util.ArrayList;
 
+/**
+ * this class is used to handle card 7
+ * if player decides this card
+ * next player should take 4 or 2 cards by random.
+ * it depends on color
+ * @author Alireza Nejadipour
+ * @version 3
+ */
+
 public class Seven extends Action
 {
+    /**
+     * create a new card of 7
+     * @param name the name of card
+     * @param point the point this card has
+     * @param color the color of the card
+     */
     public Seven(String name, int point, String color)
     {
         super(name, point, color);
@@ -13,6 +28,10 @@ public class Seven extends Action
     }
 
 
+    /**
+     * updates cardsToTake of next player
+     * @param players all players
+     */
     public void updateCount(ArrayList<Player> players)
     {
         int index = players.indexOf(this.getPlayer());
@@ -34,6 +53,10 @@ public class Seven extends Action
     }
 
 
+    /**
+     * the action of the card is done here
+     * @param runGame access to running system
+     */
     @Override
     public void runAction(RunGame runGame)
     {

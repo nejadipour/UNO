@@ -1,4 +1,9 @@
-import java.util.ArrayList;
+/**
+ * all information related to a card are stored here
+ * like name, color, point...
+ * @author Alireza Nejadipour
+ * @version 2.2
+ */
 
 public class Card extends RunGame
 {
@@ -7,6 +12,12 @@ public class Card extends RunGame
     private String color;
     private Player player;
 
+    /**
+     * create a new card
+     * @param name the name of card
+     * @param point the point this card has
+     * @param color the color of the card
+     */
     public Card(String name, int point, String color)
     {
         this.name = name;
@@ -21,6 +32,11 @@ public class Card extends RunGame
     }
 
 
+    /**
+     * returns information of card
+     * if it is Action card the explanation will be returned too
+     * @return string generated in method
+     */
     @Override
     public String toString()
     {
@@ -47,11 +63,14 @@ public class Card extends RunGame
 
         cardInfo.append("\n");
 
-
         return cardInfo.toString();
     }
 
 
+    /**
+     * explains what has happened by the bot
+     * @return the report of what bot has done
+     */
     public String botExplain()
     {
         return "";
@@ -59,33 +78,50 @@ public class Card extends RunGame
     }
 
 
+    /**
+     * sets the player of card
+     * @param player the player that has this card
+     */
     public void setPlayer(Player player)
     {
         this.player = player;
 
     }
 
-
+    /**
+     * gets the player that has this card
+     * @return field player is returned
+     */
     public Player getPlayer()
     {
         return player;
 
     }
 
-
+    /**
+     * gets the color of the card
+     * @return field color is returned
+     */
     public String getColor()
     {
         return color;
 
     }
 
-
+    /**
+     * gets the point of the card
+     * @return point field is returned
+     */
     public int getPoint()
     {
         return point;
 
     }
 
+    /**
+     * gets the name of the card
+     * @return field name is returned
+     */
     public String getName()
     {
         return name;

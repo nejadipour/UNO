@@ -1,17 +1,23 @@
-import javax.management.timer.Timer;
-import javax.swing.*;
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
+
+/**
+ * subclass of game
+ * running information and data will be handled here
+ * @author Alireza Nejadipour
+ * @version 6.8
+ */
 
 public class RunGame extends Game
 {
     protected Player roundPlayer;
     protected Card roundCard;
     private String direction;
-    private DisplayMap displayMap;
+    private final DisplayMap displayMap;
 
+    /**
+     * create a new runGame
+     */
     public RunGame()
     {
         super();
@@ -44,7 +50,9 @@ public class RunGame extends Game
     }
 
 
-
+    /**
+     * changes the current roundPlayer
+     */
     public void nextRound()
     {
         int index = players.indexOf(roundPlayer);
@@ -54,10 +62,12 @@ public class RunGame extends Game
         else
             setRoundPlayer(this.players.get(index + 1));
 
-
     }
 
 
+    /**
+     * play one round based on card and player's identity
+     */
     public void playRound()
     {
         displayMap.printMap(players, roundPlayer, roundCard, direction);
@@ -65,19 +75,6 @@ public class RunGame extends Game
         roundPlayer.setAllCards(allCards);
 
         roundPlayer.play(this);
-
-
-
-
-
-//        if (roundPlayer.getCardToPutMiddle() != null)
-//        {
-//            this.allCards.add(roundCard);
-//            setRoundCard(roundPlayer.getCardToPutMiddle());
-//            roundPlayer.removeCard(roundCard);
-//
-//        }
-
 
         if (roundCard instanceof Common)
         {
@@ -107,14 +104,14 @@ public class RunGame extends Game
 
         }
 
-
-
-
-
-
     }
 
 
+    /**
+     * checks if the game is finished
+     * the game is finished when one of the players has no card
+     * @return true if game is finished
+     */
     public boolean isFinished()
     {
         for (Player player : players)
@@ -126,6 +123,9 @@ public class RunGame extends Game
     }
 
 
+    /**
+     * sorts players and prints them
+     */
     public void gameBoard()
     {
         System.out.println("Game is finished!");
@@ -153,7 +153,7 @@ public class RunGame extends Game
 
                 if (player.calculatePoint() == points.get(index))
                 {
-                    System.out.println(player);
+                    System.out.println(player.getName() + "\t\t" + player.calculatePoint());
                     index++;
 
                 }
@@ -165,7 +165,10 @@ public class RunGame extends Game
     }
 
 
-
+    /**
+     * sets roundPlayer
+     * @param roundPlayer whose turn is it
+     */
     public void setRoundPlayer(Player roundPlayer)
     {
         this.roundPlayer = roundPlayer;
@@ -173,6 +176,10 @@ public class RunGame extends Game
     }
 
 
+    /**
+     * checks if the player has used 7 or not when the round card has been 7
+     * if not the player will receive extra cards
+     */
     public void sevenHandler()
     {
         if (roundPlayer.getCardsToTake() > 0)
@@ -192,6 +199,9 @@ public class RunGame extends Game
     }
 
 
+    /**
+     * cahnges the colorToTake after its related turn is done
+     */
     public void colorHandler()
     {
         if (!roundPlayer.getColorToTake().equals(""))
@@ -199,29 +209,40 @@ public class RunGame extends Game
 
     }
 
-
-
+    /**
+     * sets roundCard
+     * @param roundCard the card that is in the middle
+     */
     public void setRoundCard(Card roundCard)
     {
         this.roundCard = roundCard;
 
     }
 
+    /**
+     * set the direction of the game
+     * @param direction its either clockwise or anticlockwise
+     */
     public void setDirection(String direction)
     {
         this.direction = direction;
 
     }
 
-
+    /**
+     * gets the direction of running game
+     * @return direction field
+     */
     public String getDirection()
     {
         return direction;
 
     }
 
+
     public static void main(String[] args)
     {
+        // init the game needs...
         StartGame startGame = new StartGame();
         startGame.startMessage();
         startGame.getStartInfo();

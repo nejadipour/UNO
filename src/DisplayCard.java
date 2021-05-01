@@ -73,8 +73,27 @@ public class DisplayCard extends Display
     }
 
 
+    public void updateIndex(ArrayList<Card> cards, String smallFormat, String largeFormat)
+    {
+        this.playerCards.append("\n");
+        int lastIndex = cards.size() - 1;
+
+        for (int index = 0 ; index < lastIndex ; index++)
+        {
+            this.playerCards.append(smallFormat.replace("# ", formatCardCount(index + 1)));
+
+        }
+
+        this.playerCards.append(largeFormat.replace("# ", formatCardCount(lastIndex + 1)));
+
+    }
+
+
     public void printCards(ArrayList<Card> cards, Player player)
     {
+        this.playerCards = new StringBuilder();
+        this.ANSICodes = new ArrayList<>();
+
         updateColors(cards, player);
         updateBody(" ______", " ____________");
         updateName(cards, "|#     ", "|#           |");
@@ -82,6 +101,8 @@ public class DisplayCard extends Display
             updateBody("|      ", "|            |");
         updateName(cards, "|      ", "|          # |");
         updateBody("|______", "|____________|");
+        this.playerCards.append(getColorANSICode("reset"));
+        updateIndex(cards, "   #   ", "      #      ");
 
         System.out.println(playerCards);
 
@@ -105,17 +126,19 @@ public class DisplayCard extends Display
 |____________|
 
 
- ______ ______ _____________
-|A     |4     |B            |
-|      |      |             |
-|      |      |             |
-|      |      |             |
-|      |      |             |
-|      |      |             |
-|      |      |           B |
-|______|______|_____________|
+ ______ ______ ____________
+|A     |4     |B           |
+|      |      |            |
+|      |      |            |
+|      |      |            |
+|      |      |            |
+|      |      |            |
+|      |      |          B |
+|______|______|____________|
 
+   1      2         3
 
+"   #   ".... "      #      "    ---> '# ' should change with the index number
 head:
 " ______" ______" _____________"
 

@@ -10,36 +10,36 @@ public class Human extends Player
 
 
     @Override
-    public void chooseCard()
+    public void chooseCard(RunGame runGame)
     {
         userChoice();
         Card chosen = cards.get(choice - 1);
-        invalidHandler(chosen);
+        invalidHandler(chosen, runGame);
 
     }
 
 
-    public void invalidHandler(Card chosenCard)
+    public void invalidHandler(Card chosenCard, RunGame runGame)
     {
         if (!validCard(chosenCard))
         {
             System.out.println("You can't choose this card! try again.");
-            play();
+            chooseCard(runGame);
 
         }
         else
         {
-            setCardToPutMiddle(chosenCard);
-            askToContinue();
+
+            askToContinue(chosenCard, runGame);
 
         }
 
     }
 
 
-    public void askToContinue()
+    public void askToContinue(Card chosen, RunGame runGame)
     {
-        System.out.println(cardToPutMiddle);
+        System.out.println(chosen);
 
         System.out.println("""
                 1. Continue
@@ -47,8 +47,21 @@ public class Human extends Player
 
         userChoice();
 
-        if (choice == 2)
-            play();
+        if (choice == 1)
+        {
+            runGame.getAllCards().add(roundCard);
+            runGame.roundPlayer.removeCard(chosen);
+            runGame.setRoundCard(chosen);
+
+
+        }
+
+        else if (choice == 2)
+        {
+            chooseCard(runGame);
+//            setCardToPutMiddle(null);
+
+        }
 
     }
 

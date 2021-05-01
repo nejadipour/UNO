@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-
 public class A extends Action
 {
     public A(String name, int point, String color)
@@ -13,7 +11,6 @@ public class A extends Action
     @Override
     public void runAction(RunGame runGame)
     {
-        runGame.nextRound();
         runGame.nextRound();
 
     }

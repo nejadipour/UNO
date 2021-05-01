@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.Collections;
 
 public class Ten extends Action
@@ -27,7 +26,6 @@ public class Ten extends Action
     public void runAction(RunGame runGame)
     {
         changeDirection(runGame, runGame.getDirection());
-        runGame.nextRound();
 
     }
 

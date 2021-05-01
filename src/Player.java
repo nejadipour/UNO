@@ -18,9 +18,9 @@ public class Player extends RunGame
         this.cards = new ArrayList<>();
         this.name = name;
         this.cardsToTake = 0;
-        this.colorToTake = null;
+        this.colorToTake = "";
         this.displayCard = new DisplayCard();
-        this.noValidCounter = 0;
+        this.noValidCounter = 1;
         this.cardToPutMiddle = new Card();
         this.validExists = true;
 
@@ -31,38 +31,42 @@ public class Player extends RunGame
         super();
         this.cards = new ArrayList<>();
         this.cardsToTake = 0;
-        this.colorToTake = null;
+        this.colorToTake = "";
         this.displayCard = new DisplayCard();
-        this.noValidCounter = 0;
+        this.noValidCounter = 1;
         this.cardToPutMiddle = new Card();
         this.validExists = true;
 
     }
 
 
-    public void beforeChoose()
+    public void beforeChoose(RunGame runGame)
     {
         if (this instanceof Human)
             displayCard.printCards(this.cards, this);
 
         if (noValid())
         {
-            if (noValidCounter == 0)
+            if (noValidCounter  == 1)
             {
                 System.out.println("No valid card found for " + getName());
                 System.out.println("One card will be added from store.");
                 pressEnter();
-                noValidCounter++;
-                Card newCard = randomCard();
+                setNoValidCounter(2);
+                Card newCard = randomCard(allCards);
+                if (newCard instanceof Eight)
+                    setNoValidCounter(1);
                 addCard(newCard);
                 allCards.remove(newCard);
-                this.beforeChoose();
+                this.beforeChoose(runGame);
 
             }
+
             else
             {
                 System.out.println("Again there is no valid card to use.");
                 System.out.println("This turn is finished");
+                setNoValidCounter(1);
                 pressEnter();
                 setValidExists(false);
 
@@ -74,18 +78,20 @@ public class Player extends RunGame
     }
 
 
-    public void chooseCard()
+    public void chooseCard(RunGame runGame)
     {
 
     }
 
 
-    public void play()
+    public void play(RunGame runGame)
     {
-        beforeChoose();
+        setValidExists(true);
+//        setCardToPutMiddle(null);
+        beforeChoose(runGame);
 
         if (validExists)
-            chooseCard();
+            chooseCard(runGame);
 
     }
 
@@ -117,12 +123,12 @@ public class Player extends RunGame
 
     public boolean validCard(Card chosenCard)
     {
-        if (colorToTake == null)
+        if (colorToTake.equals(""))
             return roundCard.getColor().equals(chosenCard.getColor()) ||
                    roundCard.getName().equals(chosenCard.getName()) ||
                    chosenCard instanceof Action;
         else
-            return colorToTake.equals(chosenCard.getColor()) &&
+            return colorToTake.equals(chosenCard.getColor()) ||
                    (roundCard.getName().equals(chosenCard.getName()) ||
                    chosenCard instanceof Action);
 
@@ -133,6 +139,13 @@ public class Player extends RunGame
     {
         cards.add(card);
         card.setPlayer(this);
+
+    }
+
+
+    public void removeCard(Card card)
+    {
+        cards.remove(card);
 
     }
 
@@ -150,7 +163,7 @@ public class Player extends RunGame
     @Override
     public String toString()
     {
-        return getName() + "\t\t" + calculatePoint();
+        return getName() + "\t\t" + getCards().size() + " cards";
 
     }
 
@@ -180,11 +193,11 @@ public class Player extends RunGame
 
     }
 
-    public void setCardToPutMiddle(Card cardToPutMiddle)
-    {
-        this.cardToPutMiddle = cardToPutMiddle;
-
-    }
+//    public void setCardToPutMiddle(Card cardToPutMiddle)
+//    {
+//        this.cardToPutMiddle = cardToPutMiddle;
+//
+//    }
 
     public Card getCardToPutMiddle()
     {
@@ -195,6 +208,24 @@ public class Player extends RunGame
     public void setValidExists(boolean validExists)
     {
         this.validExists = validExists;
+
+    }
+
+    public int getCardsToTake()
+    {
+        return cardsToTake;
+
+    }
+
+    public String getColorToTake()
+    {
+        return colorToTake;
+
+    }
+
+    public void setNoValidCounter(int noValidCounter)
+    {
+        this.noValidCounter = noValidCounter;
 
     }
 

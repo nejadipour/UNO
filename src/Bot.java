@@ -7,7 +7,7 @@ public class Bot extends Player
     }
 
     @Override
-    public void chooseCard()
+    public void chooseCard(RunGame runGame)
     {
         int index;
         Card chosen;
@@ -20,7 +20,11 @@ public class Bot extends Player
 
             if (validCard(chosen))
             {
-                setCardToPutMiddle(chosen);
+                System.out.println(chosen.botExplain());
+                runGame.getAllCards().add(roundCard);
+                runGame.roundPlayer.removeCard(chosen);
+                runGame.setRoundCard(chosen);
+
                 break;
 
             }

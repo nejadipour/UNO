@@ -1,18 +1,29 @@
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 
 public class StartGame extends Game
 {
+    private String welcomeMessage;
     public StartGame()
     {
         super();
+        this.welcomeMessage = """
+                \033[0;1m
+                Welcome to UNO Game!\u001B[0m
+                Hope U Enjoy it;)
+                
+                Author : Alireza Nejadipour
+                Version: 2.2
+                
+                """;
 
     }
 
 
     public void startMessage()
     {
-        System.out.println("Welcome to UNO.");
+        System.out.println(welcomeMessage);
 
     }
 
@@ -98,7 +109,7 @@ public class StartGame extends Game
         Eight card10 = new Eight("8 ", 8, color);
         Ten card11 = new Ten("10", 10, color);
         A card12 = new A("A ", 11, color);
-        B card13 = new B("B", 12, color);
+        B card13 = new B("B ", 12, color);
 
         colorCards.add(card1);
         colorCards.add(card2);
@@ -129,8 +140,8 @@ public class StartGame extends Game
         {
             for (Player player : players)
             {
-                Card card = randomCard(allCards);
-                player.addCard(randomCard(allCards));
+                Card card = randomCard();
+                player.addCard(card);
                 allCards.remove(card);
 
             }
@@ -139,12 +150,17 @@ public class StartGame extends Game
 
         }
 
+        System.out.println("Cards are passed to players. Each player has 7 cards now.");
+
     }
 
 
     public Player whoStarts()
     {
         int index = random.nextInt(players.size());
+
+        System.out.println(players.get(index).getName() + " will start the game.");
+        pressEnter();
 
         return players.get(index);
 

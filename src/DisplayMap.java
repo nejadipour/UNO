@@ -1,14 +1,33 @@
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class DisplayMap extends Display
 {
-    private String format1; // for 3 or 4 players
-    private String format2; // for 5 players
+    private String format1; // for 3 players
+    private String format2; // for 4 players
+    private String format3; // for 5 players
     private String map;
 
-    public DisplayMap(int size)
+    public DisplayMap()
     {
         this.format1 = """
+                                  AAAAAAA
+                                  aaCards
+                                 Score 111
+                                
+                                ____________
+                               |#           |
+                               |            |
+                               |            |
+                 CCCCCCC       |            |      BBBBBBB
+                 ccCards       |            |      bbCards
+                Score 333      |            |     Score 222
+                               |          # |
+                               |____________|
+                                
+                                  """;
+
+        this.format2 = """
                                   AAAAAAA
                                   aaCards
                                  Score 111
@@ -28,7 +47,7 @@ public class DisplayMap extends Display
                                  Score 333""";
 
 
-        this.format2 = """
+        this.format3 = """
                                   AAAAAAA
                                   aaCards
                                  Score 111
@@ -48,11 +67,18 @@ public class DisplayMap extends Display
                         Score 444            Score 333""";
 
 
+    }
 
-        if (size == 5)
-            this.map = format2;
-        else
-            this.map = format1;
+
+    public void initMap(int size)
+    {
+        switch (size)
+        {
+            case 3 -> this.map = format1;
+            case 4 -> this.map = format2;
+            case 5 -> this.map = format3;
+
+        }
 
     }
 
@@ -63,17 +89,17 @@ public class DisplayMap extends Display
         String yellowANSICode = getColorANSICode("yellow");
         String resetANSICode = getColorANSICode("reset");
 
-        this.map = grayANSICode + map + resetANSICode;
+        this.map = grayANSICode + this.map + resetANSICode;
 
         String cardColor = roundCard.getColor();
 
-        this.map = map.replace(" ____________", getColorANSICode(cardColor) + " ____________" + grayANSICode);
-        this.map = map.replace("|#           |", getColorANSICode(cardColor) + "|#           |" + grayANSICode);
-        this.map = map.replace("|            |", getColorANSICode(cardColor) + "|            |" + grayANSICode);
-        this.map = map.replace("|          # |", getColorANSICode(cardColor) + "|          # |" + grayANSICode);
-        this.map = map.replace("|____________|", getColorANSICode(cardColor) + "|____________|" + grayANSICode);
+        this.map = this.map.replace(" ____________", getColorANSICode(cardColor) + " ____________" + grayANSICode);
+        this.map = this.map.replace("|#           |", getColorANSICode(cardColor) + "|#           |" + grayANSICode);
+        this.map = this.map.replace("|            |", getColorANSICode(cardColor) + "|            |" + grayANSICode);
+        this.map = this.map.replace("|          # |", getColorANSICode(cardColor) + "|          # |" + grayANSICode);
+        this.map = this.map.replace("|____________|", getColorANSICode(cardColor) + "|____________|" + grayANSICode);
 
-        this.map = map.replace("# ", roundCard.getName());
+        this.map = this.map.replace("# ", roundCard.getName());
 
 
         int nameAscii = 'A';
@@ -91,16 +117,16 @@ public class DisplayMap extends Display
 
             if (player.equals(roundPlayer))
             {
-                this.map = map.replace(nameInMap, yellowANSICode + playerName + grayANSICode);
-                this.map = map.replace(cardNumInMap + "Cards", yellowANSICode + cardCount + "Cards" + grayANSICode);
-                this.map = map.replace("Score " + pointInMap, yellowANSICode + "Score " + point + grayANSICode);
+                this.map = this.map.replace(nameInMap, yellowANSICode + playerName + grayANSICode);
+                this.map = this.map.replace(cardNumInMap + "Cards", yellowANSICode + cardCount + "Cards" + grayANSICode);
+                this.map = this.map.replace("Score " + pointInMap, yellowANSICode + "Score " + point + grayANSICode);
 
             }
             else
             {
-                this.map = map.replace(nameInMap, playerName);
-                this.map = map.replace(cardNumInMap + "Cards", cardCount + "Cards");
-                this.map = map.replace("Score " + pointInMap, "Score " + point);
+                this.map = this.map.replace(nameInMap, playerName);
+                this.map = this.map.replace(cardNumInMap + "Cards", cardCount + "Cards");
+                this.map = this.map.replace("Score " + pointInMap, "Score " + point);
 
             }
 
@@ -109,6 +135,7 @@ public class DisplayMap extends Display
             pointAscii++;
 
         }
+
 
     }
 
@@ -145,16 +172,7 @@ public class DisplayMap extends Display
     }
 
 
-    public String formatCardCount(int count)
-    {
-        String cardCount = Integer.toString(count);
-        if (cardCount.length() == 2)
-            return cardCount;
 
-        cardCount = cardCount + " ";
-        return cardCount;
-
-    }
 
 
     public String formatPoint(int point)
@@ -175,6 +193,12 @@ public class DisplayMap extends Display
 
     public void printMap(ArrayList<Player> players, Player roundPlayer, Card roundCard, String direction)
     {
+        System.out.println("____________________________________________________");
+        initMap(players.size());
+
+        if (direction.equals("anticlockwise"))
+            Collections.reverse(players);
+
         updateMap(players, roundPlayer, roundCard);
 
         if (direction.equals("clockwise"))
@@ -184,6 +208,9 @@ public class DisplayMap extends Display
         System.out.println();
 
         System.out.println(this.map);
+
+        if (direction.equals("anticlockwise"))
+            Collections.reverse(players);
 
     }
 

@@ -63,6 +63,8 @@ public class Two extends Action
 
         } while (other.equals(this.getPlayer()));
 
+        System.out.println(this.getPlayer().getName() + " decided player " + other.getName());
+
     }
 
 
@@ -90,7 +92,6 @@ public class Two extends Action
             autoChoosePlayer(runGame.getPlayers());
 
         giveCard();
-        runGame.nextRound();
 
     }
 
